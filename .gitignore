@@ -1,8 +1,8 @@
 # Project specific
-model_building/Dataset/
-model_building/model.h5
-model_building/lgb.pkl
-model_building/Crop_recomendation.csv
+Dataset/
+model.h5
+Crop_recommendation.csv
+lgb.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
