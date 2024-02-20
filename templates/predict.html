@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Recommendation</title>
+  <script src="/static/js/predict.js" defer></script>
+  <link href="/static/css/predict.css" rel="stylesheet">
+</head>
+
+<body>
+  <h1>Crop Recommendation</h1>
+  <form id="cropForm" method="POST" action="/predict">
+    <div class="container">
+      <div class="left"><label for="N">N (Nitrogen):</label></div>
+      <div class="right"><input type="text" name="N" required></div>
+    </div>
+
+    <div class="container">
+      <div class="left"><label for="P">P (Phosphorus):</label></div>
+      <div class="right"><input type="text" name="P" required></div>
+    </div>
+
+    <div class="container">
+      <div class="left"><label for="K">K (Potassium):</label></div>
+      <div class="right"><input type="text" name="K" required></div>
+    </div>
+
+    <div class="container">
+      <div class="left"><label for="temperature">Temperature:</label></div>
+      <div class="right"><input type="text" name="temperature" required></div>
+    </div>
+
+    <div class="container">
+      <div class="left"><label for="humidity">Humidity:</label></div>
+      <div class="right"><input type="text" name="humidity" required></div>
+    </div>
+
+    <div class="container">
+      <div class="left"><label for="ph">pH:</label></div>
+      <div class="right"><input type="text" name="ph" required></div>
+    </div>
+
+    <div class="button">
+      <button type="submit">Predict</button>
+    </div>
+  </form>
+
+  <div id="result-container"></div>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+}
+
+.left {
+  width: 200px;
+}
+
+.right {
+  width: 200px;
+}
+
+.button {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
