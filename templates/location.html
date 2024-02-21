@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/css/location.css" rel="stylesheet">
+  <title>Location Information</title>
+</head>
+
+<body>
+  <h1>Enter Latitude and Longitude</h1>
+  <form id="locationForm" action="/location" method="POST">
+    <div class="container">
+      <div class="left"><label for="latitude">Latitude:</label></div>
+      <div class="right"><input type="text" id="latitude" name="latitude" required></div>
+    </div>
+    <div class="container">
+      <div class="left"><label for="longitude">Longitude:</label></div>
+      <div class="right"><input type="text" id="longitude" name="longitude" required></div>
+    </div>
+    <button type="submit">Submit</button>
+    <button type="button" id="geolocation">Use Geolocation</button>
+  </form>
+
+  <div id="response"></div>
+
+  <script src="/static/js/location.js"></script>
+</body>
+
+</html>

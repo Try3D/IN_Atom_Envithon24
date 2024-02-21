@@ -4,6 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/static/js/irrigation.js" defer></script>
+  <style>
+    .container {
+      display: flex;
+    }
+
+    .left {
+      width: 200px;
+    }
+
+    .right {
+      width: 200px;
+    }
+
+    .button {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  </style>
   <title>Irrigation Advice</title>
 </head>
 
@@ -11,53 +30,31 @@
   <h1>Irrigation</h1>
 
   <form id="irrigationForm">
-    <div>
-      <label for="crop">Select Crop:</label>
-      <select id="crop" name="crop">
-        <option value="" disabled selected>Select Crop</option>
-        {% for crop in crops %}
-        <option value="{{ crop }}">{{ crop }}</option>
-        {% endfor %}
-      </select>
+    <div class="container">
+      <div class="left">
+        <label for="crop" class="">Select Crop:</label>
+      </div>
+      <div class="right">
+        <select id="crop" name="crop">
+          <option value="" disabled selected>Select Crop</option>
+          {% for crop in crops %}
+          <option value="{{ crop }}">{{ crop }}</option>
+          {% endfor %}
+        </select>
+      </div>
     </div>
 
-    <div>
-      <div>
-        <label for="irrigation">Enter Irrigation Amount:</label>
-        <input id="irrigation" name="irrigation" required>
-      </div>
+    <div class="container">
+      <div class="left"><label for="irrigation">Enter Irrigation Amount:</label></div>
+      <div class="right"><input id="irrigation" name="irrigation" required></div>
+    </div>
 
-      <div>
-        <button type="submit" onclick="submitIrrigationForm()">Submit</button>
-      </div>
+    <div class="button">
+      <button type="submit">Submit</button>
+    </div>
   </form>
 
   <div id="result"></div>
-
-  <script>
-    const form = document.querySelector("form")
-    form.addEventListener("submit", (event) => {
-      event.preventDefault()
-      submitIrrigationForm()
-    })
-
-    function submitIrrigationForm() {
-      let formData = new FormData(document.getElementById("irrigationForm"));
-
-      fetch("/irrigation", {
-        method: "POST",
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById("result").innerHTML = `
-          <p>Crop: ${data.crop}</p>
-          <p>Status: ${data.status}</p>
-          <p>Irrigation per day: ${data.toIrrigate} L/m²</p>
-          `
-        })
-    }
-  </script>
 </body>
 
 </html>
