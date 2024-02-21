@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irrigation Advice</title>
+</head>
+
+<body>
+  <h1>Irrigation</h1>
+
+  <form id="irrigationForm">
+    <div>
+      <label for="crop">Select Crop:</label>
+      <select id="crop" name="crop">
+        <option value="" disabled selected>Select Crop</option>
+        {% for crop in crops %}
+        <option value="{{ crop }}">{{ crop }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <div>
+        <label for="irrigation">Enter Irrigation Amount:</label>
+        <input id="irrigation" name="irrigation" required>
+      </div>
+
+      <div>
+        <button type="submit" onclick="submitIrrigationForm()">Submit</button>
+      </div>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const form = document.querySelector("form")
+    form.addEventListener("submit", (event) => {
+      event.preventDefault()
+      submitIrrigationForm()
+    })
+
+    function submitIrrigationForm() {
+      let formData = new FormData(document.getElementById("irrigationForm"));
+
+      fetch("/irrigation", {
+        method: "POST",
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("result").innerHTML = `
+          <p>Crop: ${data.crop}</p>
+          <p>Status: ${data.status}</p>
+          <p>Irrigation per day: ${data.toIrrigate} L/m²</p>
+          `
+        })
+    }
+  </script>
+</body>
+
+</html>

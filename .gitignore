@@ -1,8 +1,9 @@
 # Project specific
+lgb.pkl
 Dataset/
 model.h5
 Crop_recommendation.csv
-lgb.pkl
+Food_Production.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

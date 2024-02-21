@@ -2,14 +2,20 @@ from flask import Flask, jsonify, request, render_template
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 import numpy as np
+import pandas as pd
 import joblib
 from PIL import Image
 import io
 
 app = Flask(__name__)
 
+df = pd.read_csv("./model_building/Food_Production.csv")
 model = load_model("./model_building/model.h5")
 lightgbm_model = joblib.load("./model_building/lgb.pkl")
+
+df1 = df.dropna(
+    subset=["Freshwater withdrawals per kilogram (liters per kilogram)"],
+)
 
 
 def preprocess(image, target_size=(225, 225)):
@@ -56,6 +62,38 @@ def predict():
     prediction = lightgbm_model.predict(input_array)[0]
 
     return jsonify({"prediction": prediction})
+
+
+@app.route("/irrigation", methods=["GET", "POST"])
+def irrigation():
+    if request.method == "GET":
+        crops = df["Food product"].tolist()
+        return render_template("irrigation.html", crops=crops)
+
+    crop = request.form.get("crop")
+    irrigation = float(request.form.get("irrigation"))
+
+    to_irrigate = df.loc[df["Food product"] == crop][
+        "Freshwater withdrawals per kilogram (liters per kilogram)"
+    ].tolist()[0]
+    to_irrigate_daily = to_irrigate / 365
+    delta = to_irrigate_daily / 10
+
+    status = ""
+    if irrigation - to_irrigate_daily > delta:
+        status = "You are over irrigating."
+    elif irrigation - to_irrigate_daily < -delta:
+        status = "You are under irrigating."
+    else:
+        status = "You are irrigating correctly."
+
+    return jsonify(
+        {
+            "crop": crop,
+            "status": status,
+            "toIrrigate": to_irrigate_daily,
+        }
+    )
 
 
 if __name__ == "__main__":
